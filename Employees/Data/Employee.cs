@@ -20,9 +20,15 @@ public class EmployeeData
     };
 
 
-    public static List<Employee> GetEmployees()
+    public static Array GetEmployees()
     {
-        return _employees;
+        var items =
+            from e in _employees
+            select new { e.LastName, e.FirstName, e.Department };
+
+        //var list = items.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToArray();
+       // return list;
+       return items.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToArray();
     }
 
     public static Employee? GetEmployee(int id)
