@@ -28,7 +28,13 @@ if (app.Environment.IsDevelopment())
 
 // Add endpoints
 app.MapGet("/employees", () => EmployeeData.GetEmployees());
-app.MapGet("/employees/{id}", (int id) => EmployeeData.GetEmployee(id));
+app.MapGet("/employees/{id}", (int id) =>
+{
+    var result = EmployeeData.GetEmployee(id);
+    if (result == null) return Results.NotFound();
+    return Results.Ok(result);
+});
+
 app.MapPost("/employees", (Employee newEmployee) => EmployeeData.CreateEmployee(newEmployee));
 
 app.Run();
