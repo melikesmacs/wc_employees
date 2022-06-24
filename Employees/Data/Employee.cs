@@ -26,8 +26,6 @@ public class EmployeeData
             from e in _employees
             select new { e.LastName, e.FirstName, e.Department };
 
-        //var list = items.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToArray();
-       // return list;
        return items.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToArray();
     }
 
