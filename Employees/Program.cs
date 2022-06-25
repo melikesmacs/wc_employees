@@ -28,13 +28,27 @@ if (app.Environment.IsDevelopment())
 
 // Add endpoints
 app.MapGet("/employees", () => EmployeeData.GetEmployees());
+    
 app.MapGet("/employees/{id}", (int id) =>
 {
     var result = EmployeeData.GetEmployee(id);
-    if (result == null) return Results.NotFound();
+    if (result == null) return Results.NotFound($"An employee with id '{id}' was not found in the system.");
     return Results.Ok(result);
 });
 
-app.MapPost("/employees", (Employee newEmployee) => EmployeeData.CreateEmployee(newEmployee));
+app.MapPost("/employees", (Employee newEmployee) =>
+{
+    var found = EmployeeData.EmployeeExists(newEmployee.Id);
+    if (found is true)
+    {
+        var id = newEmployee.Id;
+        return Results.BadRequest($"An employee with id '{id}' already exists. The new employee was not added.");
+    }
+    else
+    {
+        var result = EmployeeData.CreateEmployee(newEmployee);
+        return Results.Ok(result);
+    }
+});
 
 app.Run();

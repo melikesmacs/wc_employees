@@ -35,4 +35,10 @@ public class EmployeeData
         _employees.Add(newEmployee);
         return newEmployee;
     }
-}
+
+    public static bool EmployeeExists(int id)
+    {
+        var employeeExists = _employees.Where(e => e.Id == id).FirstOrDefault();
+        return employeeExists == null;
+    }
+}   
