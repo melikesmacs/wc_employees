@@ -12,10 +12,8 @@
 
   <ItemGroup>
     <None Remove="Data\" />
-    <None Remove="API\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="API\" />
   </ItemGroup>
 </Project>
