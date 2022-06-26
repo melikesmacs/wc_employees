@@ -50,7 +50,8 @@ public class EmployeeData
         }
     }
 
-    // Note: 
+    // Note: This validation should take place in the data store and the resulting
+    //       success or failure propagated back to the caller accordingly.
     public static bool EmployeeExists(int id)
     {
         var employeeExists = _employees.Where(e => e.Id == id).SingleOrDefault();
