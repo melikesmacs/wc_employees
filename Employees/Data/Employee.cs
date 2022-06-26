@@ -20,9 +20,13 @@ public class EmployeeData
     };
 
 
-    public static List<Employee> GetEmployees()
+    public static Array GetEmployees()
     {
-        return _employees;
+        var items =
+            from e in _employees
+            select new { e.LastName, e.FirstName, e.Department };
+
+        return items.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToArray();
     }
 
     public static Employee? GetEmployee(int id)
@@ -38,7 +42,15 @@ public class EmployeeData
 
     public static bool EmployeeExists(int id)
     {
-        var employeeExists = _employees.Where(e => e.Id == id).FirstOrDefault();
-        return employeeExists == null;
+        var employeeExists = _employees.Where(e => e.Id == id).SingleOrDefault();
+
+        if (employeeExists is null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
-}   
+}
