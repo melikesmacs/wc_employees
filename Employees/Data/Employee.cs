@@ -1,4 +1,6 @@
-﻿namespace Employees;
+﻿
+
+namespace Employees;
 
 public record Employee
 {
@@ -34,12 +36,21 @@ public class EmployeeData
         return _employees.SingleOrDefault(employee => employee.Id == id);
     }
 
-    public static Employee CreateEmployee(Employee newEmployee)
+    public static Employee? CreateEmployee(Employee newEmployee)
     {
-        _employees.Add(newEmployee);
-        return newEmployee;
+        var found = EmployeeExists(newEmployee.Id);
+        if (found is true)
+        {
+            return null;
+        }
+        else
+        {
+            _employees.Add(newEmployee);
+            return newEmployee;
+        }
     }
 
+    // Note: 
     public static bool EmployeeExists(int id)
     {
         var employeeExists = _employees.Where(e => e.Id == id).SingleOrDefault();

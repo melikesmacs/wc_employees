@@ -38,17 +38,29 @@ app.MapGet("/employees/{id}", (int id) =>
 
 app.MapPost("/employees", (Employee newEmployee) =>
 {
-    var found = EmployeeData.EmployeeExists(newEmployee.Id);
-    if (found is true)
+    var result = EmployeeData.CreateEmployee(newEmployee);
+
+    if (result == null)
     {
-        var id = newEmployee.Id;
-        return Results.BadRequest($"An employee with id '{id}' already exists. The new employee was not added.");
+        return Results.BadRequest($"An employee with id '{newEmployee.Id}' already exists. The new employee was not added.");
     }
     else
     {
-        var result = EmployeeData.CreateEmployee(newEmployee);
         return Results.Ok(result);
     }
+   
+
+    //var found = EmployeeData.EmployeeExists(newEmployee.Id);
+    //if (found is true)
+    //{
+    //    var id = newEmployee.Id;
+    //    return Results.BadRequest($"An employee with id '{id}' already exists. The new employee was not added.");
+    //}
+    //else
+    //{
+    //    var result = EmployeeData.CreateEmployee(newEmployee);
+    //    return Results.Ok(result);
+    //}
 });
 
 app.Run();
