@@ -32,7 +32,7 @@ app.MapGet("/employees", () => EmployeeData.GetEmployees());
 app.MapGet("/employees/{id}", (int id) =>
 {
     var result = EmployeeData.GetEmployee(id);
-    if (result == null) return Results.NotFound($"An employee with id '{id}' was not found in the system.");
+    if (result is null) return Results.NotFound($"An employee with id '{id}' was not found in the system.");
     return Results.Ok(result);
 });
 
@@ -40,7 +40,7 @@ app.MapPost("/employees", (Employee newEmployee) =>
 {
     var result = EmployeeData.CreateEmployee(newEmployee);
 
-    if (result == null)
+    if (result is null)
     {
         return Results.BadRequest($"An employee with id '{newEmployee.Id}' already exists. The new employee was not added.");
     }
